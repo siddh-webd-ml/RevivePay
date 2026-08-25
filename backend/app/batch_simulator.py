@@ -230,7 +230,7 @@ import joblib
 
 from policy import evaluate_policy
 from simulator import simulate_recovery
-
+from audit import create_audit_event
 
 # ================================================
 # LOAD MODEL
@@ -389,6 +389,14 @@ for _, row in batch.iterrows():
         transaction,
         final_action
     )
+    audit_event = create_audit_event(
+    transaction=transaction_data,
+    recovery_probability=recovery_probability,
+    expected_recovery_value=expected_recovery,
+    ai_recommendation=recommended_action,
+    policy_result=policy_result,
+    simulation_result=simulation
+)
 
 
     if simulation["status"] == "EXECUTED":
